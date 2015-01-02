@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <title>Example with Transitions</title>
+    <link rel="stylesheet" href="transition.css" />
+  </head>
+  <body>
+    <h1>Example with Transitions</h1>
+    <div id="container"></div>
+
+    <script src="http://fb.me/react-with-addons-0.12.2.min.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+    <script type="text/jsx">
+      var CSSTransitionGroup = React.addons.CSSTransitionGroup;
+      var INTERVAL = 1000;
+
+      var AnimateDemo = React.createClass({
+        getInitialState: function() {
+          return {start: 0};
+        },
+
+        componentDidMount: function() {
+          this.interval = setInterval(this.tick, INTERVAL);
+        },
+
+        componentWillUnmount: function() {
+          clearInterval(this.interval);
+        },
+
+        tick: function() {
+          this.setState({start: this.state.start + 1});
+        },
+
+        render: function() {
+          var SIZE = 3;
+          var children = [];
+          var pos = 0;
+          var colors = ['red', 'gray', 'blue'];
+          for (var i = this.state.start; i < this.state.start + SIZE; i++) {
+            var style = {
+              left: pos * 128,
+              background: colors[i % colors.length]
+            };
+            pos++;
+            children.push(<div key={i} className="animateItem" style={style}>{i}</div>);
+          }
+          return (
+            <CSSTransitionGroup
+              className="animateExample"
+              transitionName="example">
+              {children}
+            </CSSTransitionGroup>
+          );
+        }
+      });
+
+      React.render(
+        <AnimateDemo />,
+        document.getElementById('container')
+      );
+    </script>
+  </body>
+</html>

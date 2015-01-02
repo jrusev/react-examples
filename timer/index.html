@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv='Content-type' content='text/html; charset=utf-8'>
+    <title>Timer</title>
+  </head>
+  <body>
+    <h1>Timer Example with React</h1>
+    <div id="container"></div>
+    
+    <script src="http://fb.me/react-0.12.2.min.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+    <script type="text/jsx">
+      var ExampleApplication = React.createClass({
+        render: function() {
+          var elapsed = Math.round(this.props.elapsed  / 100);
+          var seconds = elapsed / 10 + (elapsed % 10 ? '' : '.0' );
+          var message =
+            'React has been successfully running for ' + seconds + ' seconds.';
+
+          return <p>{message}</p>;
+        }
+      });
+      var start = new Date().getTime();
+      setInterval(function() {
+        React.render(
+          <ExampleApplication elapsed={new Date().getTime() - start} />,
+          document.getElementById('container')
+        );
+      }, 50);
+    </script>
+  </body>
+</html>
