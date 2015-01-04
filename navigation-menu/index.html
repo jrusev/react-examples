@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Navigation Menu</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
+  <body>
+    <h1>Navigation Menu with React</h1>
+    <div id="container"></div>
+    
+    <script src="http://fb.me/react-0.12.2.min.js"></script>
+    <script src="http://fb.me/JSXTransformer-0.12.2.js"></script>
+    <script type="text/jsx">
+      var NavMenu = React.createClass({
+          getInitialState: function(){
+            return { selectedItem: 0 };
+          },
+          clicked: function(index){
+            this.setState({selectedItem: index});
+          },
+          render: function() {
+            var self = this;
+            return (
+              <div>
+                <ul>{ this.props.items.map(function(item, index){        
+                  var style = (index == self.state.selectedItem) ? 'focused' : '';
+      
+                  // Notice the use of the bind() method. It makes the
+                  // index available to the clicked function:              
+                  return <li className={style} onClick={self.clicked.bind(self, index)}>{item}</li>;        
+                }) }                        
+                </ul>                
+                <p>Selected: {this.props.items[this.state.selectedItem]}</p>
+              </div>
+            );
+          }
+      });
+
+      React.renderComponent(
+          <NavMenu items={ ['Home', 'Services', 'About', 'Contact us'] } />,
+          document.getElementById('container')
+      );
+    </script>
+  </body>
+</html>
